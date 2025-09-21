@@ -435,6 +435,20 @@ const io = new IOServer(httpServer, {
 initSockets(io);
 
 // routes
+// root + health
+app.get("/", (_req, res) => {
+  res.json({
+    status: "ok",
+    name: "fleet-api",
+    env: NODE_ENV,
+    uptime: process.uptime(),
+    time: new Date().toISOString(),
+  });
+});
+
+// if your health router doesn't already expose /api/health, keep this:
+// app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
 app.use(healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', vehiclesRoutes);
