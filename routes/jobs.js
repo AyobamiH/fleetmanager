@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Job from '../models/job.js';
+import Job from '../models/Job.js';
 import { auth, requireOrg } from '../middleware/auth.js';
 
 const r = Router();
