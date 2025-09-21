@@ -18,7 +18,7 @@ export function requireOrg(req, res, next) {
 }
 
 
-export function authMiddleware(req, res, next) {
+export function auth(req, res, next) {
   const hdr = req.headers.authorization || '';
   const token = hdr.startsWith('Bearer ') ? hdr.slice(7) : null;
   if (!token) return res.status(401).json({ error: 'missing_token' });
