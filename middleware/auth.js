@@ -16,9 +16,7 @@ export function requireOrg(req, res, next) {
   if (req.params.orgId !== req.user.orgId) return res.status(403).json({ error: 'cross-tenant blocked' });
   next();
 }
-// middleware/auth.js (ESM)
-// ------------------------------
-import jwt from 'jsonwebtoken';
+
 
 export function authMiddleware(req, res, next) {
   const hdr = req.headers.authorization || '';
