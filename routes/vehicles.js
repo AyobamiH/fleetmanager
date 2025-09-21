@@ -30,7 +30,7 @@ const totalPages = Math.max(1, Math.ceil(total / limitNum));
       hasPrev: pageNum > 1
     }
   });
-});
+
 
 
 // GET /api/orgs/:orgId/vehicles/export/csv
@@ -74,7 +74,7 @@ r.get('/orgs/:orgId/vehicles', auth, requireOrg, async (req, res) => {
     Vehicle.countDocuments(q)
   ]);
 
-  
+  });
 
 r.post('/orgs/:orgId/vehicles', auth, requireOrg, async (req, res) => {
   const { name, plate } = req.body || {};
