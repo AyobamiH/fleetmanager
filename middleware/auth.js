@@ -18,13 +18,8 @@ export function auth(req, res, next) {
     if (!userId || !claims.orgId) {
       return res.status(401).json({ error: 'invalid_token_claims' });
     }
-    req.user = {
-      id: String(userId),
-      orgId: String(claims.orgId),
-      role: claims.role || 'user',
-      // keep the raw claims if you want:
-      ...claims,
-    };
+    req.user = { id: String(userId), orgId: String(claims.orgId), role: claims.role || 'user' };
+
     next();
   } catch (err) {
     // tiny bit of debug without leaking secrets
