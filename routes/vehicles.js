@@ -6,31 +6,6 @@ import { Parser as Json2CsvParser } from 'json2csv';
 
 const r = Router();
 
-const totalPages = Math.max(1, Math.ceil(total / limitNum));
-  res.json({
-    vehicles: rows.map(v => ({
-      // normalize to what the UI uses
-      id: String(v._id),
-      name: v.name,
-      plate: v.plate,
-      status: v.status || 'active',
-      make: v.make || null,
-      vehicleModel: v.vehicleModel || null,
-      year: v.year || null,
-      deviceId: v.deviceId || null,
-      odometerKm: v.odometerKm ?? 0,
-      updatedAt: v.updatedAt || v.createdAt,
-    })),
-    pagination: {
-      page: pageNum,
-      limit: limitNum,
-      total,
-      totalPages,
-      hasNext: pageNum < totalPages,
-      hasPrev: pageNum > 1
-    }
-  });
-
 
 
 // GET /api/orgs/:orgId/vehicles/export/csv
@@ -73,6 +48,33 @@ r.get('/orgs/:orgId/vehicles', auth, requireOrg, async (req, res) => {
       .lean(),
     Vehicle.countDocuments(q)
   ]);
+
+  const totalPages = Math.max(1, Math.ceil(total / limitNum));
+  res.json({
+    vehicles: rows.map(v => ({
+      // normalize to what the UI uses
+      id: String(v._id),
+      name: v.name,
+      plate: v.plate,
+      status: v.status || 'active',
+      make: v.make || null,
+      vehicleModel: v.vehicleModel || null,
+      year: v.year || null,
+      deviceId: v.deviceId || null,
+      odometerKm: v.odometerKm ?? 0,
+      updatedAt: v.updatedAt || v.createdAt,
+    })),
+    pagination: {
+      page: pageNum,
+      limit: limitNum,
+      total,
+      totalPages,
+      hasNext: pageNum < totalPages,
+      hasPrev: pageNum > 1
+    }
+  });
+
+
 
   });
 
