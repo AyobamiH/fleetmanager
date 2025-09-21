@@ -419,8 +419,16 @@ app.use(bodyParser.json({
   limit: '2mb',
   verify: (req, _res, buf) => { req.rawBody = buf.toString(); }
 }));
+app.use(
+  cors({
+    origin:  ALLOWED_ORIGINS, // Your frontend domain
+    methods: ["POST", "GET", "DELETE", "PUT"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-app.use(cors({ origin: ALLOWED_ORIGINS.length ? ALLOWED_ORIGINS : true, credentials: true }));
+
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(compression());
 app.use(morgan(NODE_ENV === 'production' ? 'combined' : 'dev', {
