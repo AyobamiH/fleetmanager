@@ -55,8 +55,19 @@ r.post('/register', async (req, res, next) => {
 
     res.status(201).json({
       token,
-      user: { id: String(user._id), email: user.email, name: user.name, orgId: String(user.orgId), role: user.role, status: user.status },
-      org:  { id: String(org._id), name: org.name, status: org.status }
+      user: {
+        id: String(user._id),
+        email: user.email,
+        name: user.name,
+        orgId: String(user.orgId),
+        role: user.role,
+        status: user.status
+      },
+      org:  {
+        id: String(org._id),
+        name: org.name,
+        status: org.status
+      }
     });
   } catch (e) { next(e); }
 });
@@ -95,7 +106,14 @@ r.post('/login', async (req, res, next) => {
 
     res.json({
       token,
-      user: { id: String(user._id), email: user.email, name: user.name, orgId: String(user.orgId), role: user.role, status: user.status }
+      user: {
+        id: String(user._id),
+        email: user.email,
+        name: user.name,
+        orgId: String(user.orgId),
+        role: user.role,
+        status: user.status
+      }
     });
   } catch (e) { next(e); }
 });
@@ -107,13 +125,31 @@ r.post('/login', async (req, res, next) => {
  */
 r.get('/me', auth, async (req, res, next) => {
   try {
-    const user = await User.findById(req.auth.sub).select('-passwordHash').lean();
-    const org  = await Org.findById(req.auth.orgId).lean();
+    // ✅ match your middleware: req.user = { id, orgId, role, ... }
+    const uid = req.user?.id;
+    const oid = req.user?.orgId;
+    if (!uid || !oid) return res.status(401).json({ error: 'invalid_token' });
+
+    const user = await User.findById(uid).select('-passwordHash').lean();
+    const org  = await Org.findById(oid).lean();
     if (!user || !org) return res.status(404).json({ error: 'not_found' });
 
     res.json({
-      user: { id: String(user._id), email: user.email, name: user.name, orgId: String(user.orgId), role: user.role, status: user.status, createdAt: user.createdAt },
-      org:  { id: String(org._id), name: org.name, status: org.status, createdAt: org.createdAt }
+      user: {
+        id: String(user._id),
+        email: user.email,
+        name: user.name,
+        orgId: String(user.orgId),
+        role: user.role,
+        status: user.status,
+        createdAt: user.createdAt
+      },
+      org:  {
+        id: String(org._id),
+        name: org.name,
+        status: org.status,
+        createdAt: org.createdAt
+      }
     });
   } catch (e) { next(e); }
 });
