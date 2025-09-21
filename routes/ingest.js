@@ -2,8 +2,8 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import rateLimit from 'express-rate-limit';
 import crypto from 'crypto';
-import Ledger from '../models/ledger.js';
-import Vehicle from '../models/vehicle.js';
+import Ledger from '../models/Ledger.js';
+import Vehicle from '../models/Vehicle.js';
 import { auth } from '../middleware/auth.js';
 import { emitPosition } from '../config/sockets.js';
 
