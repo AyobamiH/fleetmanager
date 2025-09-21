@@ -1,0 +1,62 @@
+services:
+  - type: web
+    name: fleet-api
+    env: node
+    region: frankfurt        # change if you prefer (e.g., oregon, singapore)
+    plan: starter            # free|starter|standard|pro
+    autoDeploy: true
+    buildCommand: npm ci
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # --- Mongo (server-only) ---
+      - key: MONGODB_URI
+        sync: false          # set in dashboard (secret)
+      - key: MONGODB_DBNAME
+        value: fleet_prod
+      - key: MONGODB_APPNAME
+        value: fleetmanager
+      # --- Auth ---
+      - key: JWT_SECRET
+        sync: false          # set in dashboard (secret)
+      # --- CORS (frontends only; comma-separated, no spaces)
+      - key: ALLOWED_ORIGINS
+        value: https://*.lovable.dev,https://your-frontend.com
+      # --- Optional realtime fan-out ---
+      - key: REDIS_URL
+        sync: false          # only if you scale to >1 instance
+      # --- Optional webhook signing ---
+      - key: WEBHOOK_SECRET
+        sync: false
+      # --- Cloudinary (if using documents upload routes) ---
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: fleet
+      - key: MAX_UPLOAD_MB
+        value: "15"
+
+# Optional: add a background worker later (trips/maintenance cron)
+#  - type: worker
+#    name: fleet-worker
+#    env: node
+#    autoDeploy: true
+#    buildCommand: npm ci
+#    startCommand: node worker.js
+#    envVars:
+#      - key: NODE_ENV
+#        value: production
+#      - key: MONGODB_URI
+#        sync: false
+#      - key: MONGODB_DBNAME
+#        value: fleet_prod
+#      - key: MONGODB_APPNAME
+#        value: fleetmanager
+#      - key: REDIS_URL
+#        sync: false
