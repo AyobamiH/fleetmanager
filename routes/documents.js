@@ -1,7 +1,7 @@
 // routes/documents.js
 import { Router } from 'express';
 import { auth, requireOrg } from '../middleware/auth.js';
-import Document from '../models/document.js';
+import Document from '../models/Document.js';
 import { cloudinary, upload } from '../config/cloudinary.js';
 
 const r = Router();
