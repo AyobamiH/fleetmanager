@@ -1,0 +1,32 @@
+{
+  "$schema": "https://hints.lovable.dev/schema.json",
+  "project": "Fleet Management MVP (Frontend Only)",
+  "authoritative_docs": [
+    "docs/KB.md"
+  ],
+  "rules": [
+    { "must": true,  "text": "Treat this repository as FRONTEND ONLY. Do NOT create or modify any backend/server files here." },
+    { "must": true,  "text": "Use org-scoped endpoints: /api/orgs/:orgId/... for all data calls. Obtain orgId from the authenticated user state." },
+    { "must": true,  "text": "Read VITE_API_BASE_URL (no trailing slash) and VITE_MAPBOX_TOKEN from .env. Never hardcode base URLs." },
+    { "must": true,  "text": "Always send Authorization: Bearer <JWT> on API calls. Handle 401 globally by logging out and routing to /login." },
+    { "must": true,  "text": "Check if a component/hook/endpoint already exists; extend it instead of duplicating." },
+    { "must": true,  "text": "Do not implement UI flows that rely on non-MVP endpoints (CSV exports, webhook rotation, full drivers/jobs) — hide/disable with a tooltip instead." },
+    { "must": true,  "text": "Document uploads must use FormData; DO NOT set Content-Type manually." },
+    { "must": true,  "text": "Respect A11y (labels, focus order) and performance (debounced queries, pagination)." },
+    { "must": false, "text": "If an endpoint 404s, do not invent a mock server. Surface a clear UI message and stop." }
+  ],
+  "file_map": {
+    "auth_store": "src/hooks/use-auth.ts",
+    "api_client": "src/lib/api.ts",
+    "vehicles_page": "src/pages/Vehicles.tsx",
+    "documents_ui": "src/components/vehicles/docs-drawer.tsx",
+    "app_boot": "src/App.tsx"
+  },
+  "preflight_checklist": [
+    "Does a similar component/hook already exist?",
+    "Is the endpoint org-scoped and present in docs/KB.md?",
+    "Is Authorization header attached?",
+    "Does BASE have no trailing slash (avoid //api)?",
+    "Are errors surfaced via toasts and not console noise?"
+  ]
+}
