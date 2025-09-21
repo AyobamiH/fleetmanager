@@ -2,7 +2,24 @@ import { Router } from 'express';
 import Vehicle from '../models/Vehicle.js';
 import { auth, requireOrg } from '../middleware/auth.js';
 
+import { Parser as Json2CsvParser } from 'json2csv';
+
 const r = Router();
+
+// GET /api/orgs/:orgId/vehicles/export/csv
+r.get('/orgs/:orgId/vehicles/export/csv', auth, requireOrg, async (req, res) => {
+  const rows = await Vehicle.find({ orgId: req.params.orgId }).sort({ createdAt: -1 }).lean();
+  const fields = ['name','plate','status','make','vehicleModel','year','vin','deviceId','odometerKm','createdAt','updatedAt'];
+  const parser = new Json2CsvParser({ fields });
+  const csv = parser.parse(rows.map(v => ({
+    ...v, id: undefined, _id: undefined
+  })));
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', 'attachment; filename="vehicles.csv"');
+  res.send(csv);
+});
+
+
 
 r.get('/orgs/:orgId/vehicles', auth, requireOrg, async (req, res) => {
   const rows = await Vehicle.find({ orgId: req.params.orgId }).sort({ name: 1 }).limit(1000).lean();
