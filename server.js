@@ -401,8 +401,11 @@ import tripsRoutes from './routes/trips.js';
 import positionsRoutes from './routes/positions.js';
 import jobsRoutes from './routes/jobs.js';
 import ingestRoutes from './routes/ingest.js';
+import documentsRoutes from './routes/documents.js';
+// import cloudinaryRoutes from './routes/cloudinary.js'; // optional
 
-const PORT = parseInt(process.env.PORT || '4000', 10);
+
+const PORT = parseInt(process.env.PORT || '3001', 10);
 const HOST = '0.0.0.0';
 const NODE_ENV = process.env.NODE_ENV || 'production';
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
@@ -439,6 +442,8 @@ app.use('/api', tripsRoutes);
 app.use('/api', positionsRoutes);
 app.use('/api', jobsRoutes);
 app.use('/api', ingestRoutes);
+app.use('/api', documentsRoutes);
+// app.use('/api', cloudinaryRoutes); // optional
 
 // boot
 await connectDB();
