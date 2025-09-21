@@ -454,6 +454,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api', vehiclesRoutes);
 app.use('/api', tripsRoutes);
 app.use('/api', positionsRoutes);
+
 app.use('/api', jobsRoutes);
 app.use('/api', ingestRoutes);
 app.use('/api', documentsRoutes);
