@@ -419,6 +419,7 @@ app.use(bodyParser.json({
   limit: '2mb',
   verify: (req, _res, buf) => { req.rawBody = buf.toString(); }
 }));
+
 app.use(
   cors({
     origin:  ALLOWED_ORIGINS, // Your frontend domain
