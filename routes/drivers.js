@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Driver from '../models/driver.js';
+import Driver from '../models/Driver.js';
 import { auth, requireOrg } from '../middleware/auth.js';
 
 const r = Router();
