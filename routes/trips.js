@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Trip from '../models/trip.js';
+import Trip from '../models/Trip.js';
 import { auth, requireOrg } from '../middleware/auth.js';
 
 const r = Router();
