@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import Org from '../models/Org.js';
-import { authMiddleware } from '../middleware/auth.js';
+import { auth } from '../middleware/auth.js';
 
 const r = Router();
 
@@ -105,7 +105,7 @@ r.post('/login', async (req, res, next) => {
  * Header: Authorization: Bearer <token>
  * Returns { user, org } loaded from Mongo
  */
-r.get('/me', authMiddleware, async (req, res, next) => {
+r.get('/me', auth, async (req, res, next) => {
   try {
     const user = await User.findById(req.auth.sub).select('-passwordHash').lean();
     const org  = await Org.findById(req.auth.orgId).lean();
