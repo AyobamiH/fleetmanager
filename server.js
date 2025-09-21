@@ -24,6 +24,8 @@ import tripsRoutes from './routes/trips.js';
 import positionsRoutes from './routes/positions.js';
 import jobsRoutes from './routes/jobs.js';
 import ingestRoutes from './routes/ingest.js';
+import driversRoutes from './routes/drivers.js';
+
 import documentsRoutes from './routes/documents.js';
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
@@ -75,6 +77,8 @@ app.options('*', cors()); // fast preflight
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(compression());
 
+
+
 // Logs
 app.use(morgan(NODE_ENV === 'production' ? 'combined' : 'dev', {
   skip: (_req, res) => res.statusCode < 400 && NODE_ENV === 'production'
@@ -109,6 +113,7 @@ app.use('/api', positionsRoutes);
 app.use('/api', jobsRoutes);
 app.use('/api', ingestRoutes);
 app.use('/api', documentsRoutes);
+app.use('/api', driversRoutes);
 
 // Boot
 await connectDB();
