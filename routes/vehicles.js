@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Vehicle from '../models/vehicle.js';
+import Vehicle from '../models/Vehicle.js';
 import { auth, requireOrg } from '../middleware/auth.js';
 
 const r = Router();
