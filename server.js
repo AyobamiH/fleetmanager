@@ -33,10 +33,7 @@ const HOST = '0.0.0.0';
 const NODE_ENV = process.env.NODE_ENV || 'production';
 
 // Build allow list from env (comma-separated, supports wildcard like *.lovable.dev)
-const ALLOWED_ORIGINS = ([
-    process.env.ALLOWED_ORIGIN,
-    /^https:\/\/.*\.lovableproject\.com$/ // Regex to match all Lovable preview domains
-  ] || '')
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGIN || '')
   .split(',')
   .map(s => s.trim())
   .filter(Boolean);
