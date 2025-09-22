@@ -79,9 +79,9 @@ r.get('/orgs/:orgId/vehicles', auth, requireOrg, async (req, res) => {
   });
 
 r.post('/orgs/:orgId/vehicles', auth, requireOrg, async (req, res) => {
-  const { name, plate } = req.body || {};
+  const { name, plate, status, make, vehicleModel, vin, devideId, odometerKm, createdAt, updatedAt } = req.body || {};
   if (!name || !plate) return res.status(400).json({ error: 'name and plate required' });
-  const doc = await Vehicle.create({ orgId: req.params.orgId, name, plate, status: 'active' });
+  const doc = await Vehicle.create({ orgId: req.params.orgId, name, plate, status, make, vehicleModel, vin, devideId, odometerKm, createdAt, updatedAt });
   res.status(201).json(doc);
 });
 
