@@ -25,6 +25,8 @@ import positionsRoutes from './routes/positions.js';
 import jobsRoutes from './routes/jobs.js';
 import ingestRoutes from './routes/ingest.js';
 import driversRoutes from './routes/drivers.js';
+import dashboardRoutes from './routes/dashboard.js';
+
 
 import documentsRoutes from './routes/documents.js';
 
@@ -114,6 +116,7 @@ app.use('/api', jobsRoutes);
 app.use('/api', ingestRoutes);
 app.use('/api', documentsRoutes);
 app.use('/api', driversRoutes);
+app.use('/api', dashboardRoutes);
 
 // Boot
 await connectDB();
