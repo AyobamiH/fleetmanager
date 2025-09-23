@@ -26,9 +26,7 @@ import jobsRoutes from './routes/jobs.js';
 import ingestRoutes from './routes/ingest.js';
 import driversRoutes from './routes/drivers.js';
 import dashboardRoutes from './routes/dashboard.js';
-import tripsRoutes from './routes/trips.js';
 import reportsRoutes from './routes/reports.js';
-
 import documentsRoutes from './routes/documents.js';
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
