@@ -28,6 +28,8 @@ import driversRoutes from './routes/drivers.js';
 import dashboardRoutes from './routes/dashboard.js';
 import reportsRoutes from './routes/reports.js';
 import documentsRoutes from './routes/documents.js';
+import maintenanceRoutes from './maintenance.js';
+
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
 const HOST = '0.0.0.0';
@@ -118,7 +120,7 @@ app.use('/api', driversRoutes);
 app.use('/api', dashboardRoutes);
 app.use('/api', tripsRoutes);
 app.use('/api', reportsRoutes);
-
+app.use('/api', maintenanceRoutes)
 // Boot
 await connectDB();
 await ensureTimeSeries(); // positions TTL (e.g., 90d)
