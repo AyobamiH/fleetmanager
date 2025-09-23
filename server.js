@@ -28,7 +28,7 @@ import driversRoutes from './routes/drivers.js';
 import dashboardRoutes from './routes/dashboard.js';
 import reportsRoutes from './routes/reports.js';
 import documentsRoutes from './routes/documents.js';
-import maintenanceRoutes from './maintenance.js';
+import maintenanceRoutes from './routes/maintenance.js';
 
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
