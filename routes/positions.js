@@ -19,4 +19,33 @@ r.get('/orgs/:orgId/positions', auth, requireOrg, async (req, res) => {
   res.json(rows);
 });
 
+/**
+ * POST /api/orgs/:orgId/positions/mobile
+ * Body: { lat, lon, speedKph?, heading?, accuracyM?, vehicleId?, driverId? }
+ * Stores a mobile-originated GPS fix and tags it with orgId.
+ */
+r.post('/orgs/:orgId/positions/mobile', auth, requireOrg, async (req, res, next) => {
+  try {
+    const { lat, lon, speedKph, heading, accuracyM, vehicleId, driverId } = req.body || {};
+    if (typeof lat !== 'number' || typeof lon !== 'number') {
+      return res.status(400).json({ error: 'lat_lon_required' });
+    }
+
+    const doc = await Position.create({
+      ts: new Date().toISOString(),
+      lat, lon,
+      speedKph: Number(speedKph) || 0,
+      heading: Number(heading) || 0,
+      accuracyM: Number(accuracyM) || undefined,
+      vehicleId: vehicleId ? String(vehicleId) : undefined,
+      driverId:  driverId  ? String(driverId)  : undefined,
+      metadata: { orgId: String(req.params.orgId), source: 'mobile' }
+    });
+
+    // (optional) if you have socket.io wired, you can emit a map update here
+
+    res.status(201).json({ ok: true, id: String(doc._id) });
+  } catch (e) { next(e); }
+});
+
 export default r;
